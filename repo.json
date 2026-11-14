@@ -1,0 +1,9 @@
+{
+  "name": "My CloudStream Repo",
+  "iconUrl": "https://raw.githubusercontent.com/CommercialBible/MyCloudStreamExtensions/builds/icon.png",
+  "description": "Personal CloudStream extensions — self-hosted, automated builds",
+  "manifestVersion": 1,
+  "pluginLists": [
+    "https://github.com/CommercialBible/MyCloudStreamExtensions/raw/builds/plugins.json"
+  ]
+}

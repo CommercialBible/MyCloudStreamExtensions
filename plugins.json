@@ -1,0 +1,66 @@
+[
+  {
+    "url": "https://github.com/CommercialBible/MyCloudStreamExtensions/raw/builds/CTGMoviesProvider.cs3",
+    "status": 1,
+    "version": 2,
+    "name": "CTGMovies",
+    "internalName": "CTGMoviesProvider",
+    "authors": [
+      "CommercialBible"
+    ],
+    "description": "CTG Movies — movies, TV shows and anime.",
+    "fileSize": 15706,
+    "repositoryUrl": "https://github.com/CommercialBible/MyCloudStreamExtensions",
+    "language": "en",
+    "tvTypes": [
+      "Movie",
+      "TvSeries",
+      "Anime"
+    ],
+    "iconUrl": "https://raw.githubusercontent.com/CommercialBible/MyCloudStreamExtensions/builds/icons/CTGMoviesProvider.png",
+    "apiVersion": 1,
+    "fileHash": "sha256-b2fc8500e8c9c39328ffa26899310bbad55a9de3c6ef054d82c8d0e46db62eab"
+  },
+  {
+    "url": "https://github.com/CommercialBible/MyCloudStreamExtensions/raw/builds/KhulnaPlexProvider.cs3",
+    "status": 1,
+    "version": 2,
+    "name": "KhulnaPlex",
+    "internalName": "KhulnaPlexProvider",
+    "authors": [
+      "CommercialBible"
+    ],
+    "description": "Khulna Plex — Bangla, Hindi, English and dubbed movies plus series.",
+    "fileSize": 19338,
+    "repositoryUrl": "https://github.com/CommercialBible/MyCloudStreamExtensions",
+    "language": "bn",
+    "tvTypes": [
+      "Movie",
+      "TvSeries"
+    ],
+    "iconUrl": "https://raw.githubusercontent.com/CommercialBible/MyCloudStreamExtensions/builds/icons/KhulnaPlexProvider.png",
+    "apiVersion": 1,
+    "fileHash": "sha256-6df39453c110ee6328da7e15f0986a4c321adba89b9e52a481f3c45607338898"
+  },
+  {
+    "url": "https://github.com/CommercialBible/MyCloudStreamExtensions/raw/builds/ServerOneProvider.cs3",
+    "status": 1,
+    "version": 1,
+    "name": "ServerOne",
+    "internalName": "ServerOneProvider",
+    "authors": [
+      "CommercialBible"
+    ],
+    "description": "IBCCL-FTP media index (movies + series, multi-language).",
+    "fileSize": 13627,
+    "repositoryUrl": "https://github.com/CommercialBible/MyCloudStreamExtensions",
+    "language": "hi",
+    "tvTypes": [
+      "Movie",
+      "TvSeries"
+    ],
+    "iconUrl": "http://103.203.93.2/public/frontend/img/favicon.png",
+    "apiVersion": 1,
+    "fileHash": "sha256-0f94f9fd8d1818a4c8627057568899cec9f120b665b6009731ddb47f4933bbb9"
+  }
+]

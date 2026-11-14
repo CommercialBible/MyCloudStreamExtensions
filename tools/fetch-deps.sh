@@ -84,4 +84,7 @@ download \
   "jspecify.jar"
 
 say "all dependencies ready in $DEPS_DIR"
-ls -1 "$DEPS_DIR"
+# NOTE: we are still inside $DEPS_DIR (the script cd's into it above), so this must
+# list the current directory. Listing "$DEPS_DIR" by its relative path fails here and,
+# under `set -e`, would abort the caller before the build ever ran.
+ls -1 .

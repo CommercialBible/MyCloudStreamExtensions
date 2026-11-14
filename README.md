@@ -100,11 +100,44 @@ providers/<Name>/src/main/kotlin/...   one directory per provider
 providers/_template/                   copy-me starter (never built)
 config/sites.json                      the source of truth: what gets built
 config/versions.json                   version ledger (version + source hash)
+ci/run.sh                              the whole CI pipeline (deps → build → verify → publish)
 tools/build.py                         build / verify / list
 tools/fetch-deps.sh                    downloads the pinned toolchain
+tools/publish-builds.sh                publishes to the builds branch (tested)
+tools/test-publish.sh                  tests for the publish script
 tools/summary.py                       renders the CI job summary
-.github/workflows/build.yml            CI: build → verify → publish
+.github/workflows/build.yml            thin trigger that calls ci/run.sh
 builds/                                generated output (mirrored to the builds branch)
+```
+
+### ⚠️ One manual step: committing the workflow file
+
+`.github/workflows/build.yml` is kept separate on purpose. GitHub refuses to let a
+**GitHub App installation token** create or update anything under `.github/workflows/`
+unless it holds the `workflows` permission — the push fails with:
+
+```
+refusing to allow a GitHub App to create or update workflow
+`.github/workflows/build.yml` without `workflows` permission
+```
+
+Because of that, the CI pipeline does **not** live in YAML. It lives in `ci/run.sh`,
+which is a normal script that pushes and runs fine. The workflow file is a ~20-line
+trigger whose only job is to call it.
+
+So automation is enabled by a one-time human action. Either:
+
+- **GitHub web UI** → *Add file → Create new file* → path `.github/workflows/build.yml`
+  → paste the contents from your local copy → commit, **or**
+- push it from a machine authenticated as your own user account (not a GitHub App):
+  `git push origin main`
+
+Once that file exists, every later change to a provider, `ci/`, or `sites.json`
+publishes itself with no further manual steps. Nothing else in the pipeline depends on
+it — you can verify that by running the pipeline by hand:
+
+```bash
+SKIP_PUBLISH=true ./ci/run.sh      # deps → build → verify, exactly as CI runs it
 ```
 
 ### Adding a new provider

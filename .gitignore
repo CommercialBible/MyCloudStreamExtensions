@@ -1,0 +1,6 @@
+# Local build toolchain & caches (fetched by tools/fetch-deps.sh)
+.toolchain/
+.build-deps/
+.work/
+*.log
+.DS_Store

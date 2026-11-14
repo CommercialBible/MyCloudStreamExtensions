@@ -1,0 +1,76 @@
+{
+  "$schema": "./sites.schema.json",
+  "repository": {
+    "name": "My CloudStream Repo",
+    "description": "Personal CloudStream extensions — self-hosted, automated builds",
+    "iconUrl": "https://raw.githubusercontent.com/CommercialBible/MyCloudStreamExtensions/builds/icon.png",
+    "manifestVersion": 1
+  },
+  "defaults": {
+    "authors": ["CommercialBible"],
+    "apiVersion": 1,
+    "status": 1
+  },
+  "sites": [
+    {
+      "enabled": true,
+      "providerName": "ServerOneProvider",
+      "displayName": "ServerOne",
+      "siteName": "IBCCL-FTP",
+      "baseUrl": "http://103.203.93.2",
+      "language": "hi",
+      "tvTypes": ["Movie", "TvSeries"],
+      "description": "IBCCL-FTP media index (movies + series, multi-language).",
+      "iconUrl": "http://103.203.93.2/public/frontend/img/favicon.png",
+      "status": 1,
+      "verification": {
+        "verified": true,
+        "verifiedOn": "2026-11-14",
+        "notes": "Home, listing, pagination, category filter, search and detail playback verified against live HTML. Search uses GET /movies?search= (the site's own /search_movies AJAX endpoint returns HTTP 500). Playback URL returns HTTP 206 video/x-matroska."
+      }
+    },
+    {
+      "enabled": true,
+      "providerName": "CTGMoviesProvider",
+      "displayName": "CTGMovies",
+      "siteName": "CTG Movies",
+      "baseUrl": "https://ctgmovies.com",
+      "language": "en",
+      "tvTypes": ["Movie", "TvSeries", "Anime"],
+      "description": "CTG Movies — movies, TV shows and anime.",
+      "iconUrl": "https://raw.githubusercontent.com/CommercialBible/MyCloudStreamExtensions/builds/icons/CTGMoviesProvider.png",
+      "status": 1,
+      "verification": {
+        "verified": "partial",
+        "verifiedOn": "2026-11-14",
+        "listings": "VERIFIED against first-party HTML captured from an authorised network. Card parsing measured on four captures: home 112 cards, /movies 32, /tv 32, /anime 32, all with title + poster (108/30/29/30 also carry a release year).",
+        "detailUrl": "CONFIRMED by the site owner: https://ctgmovies.com/movies/<slug> — the same href the listing cards already expose, so load() receives a real detail URL.",
+        "details": "UNVERIFIED — no detail-page capture was supplied, so the title/poster/plot selectors fall back to primitives already proven on the listings (h1, og:image, og:description).",
+        "playback": "UNVERIFIED and intentionally gated. The site requires a signed-in account to play; that authentication gate is NOT bypassed. loadLinks() reports only media the page exposes to an already-authorised client and returns false otherwise.",
+        "environment": "ctgmovies.com is not reachable from the build environment (port 443 TLS timeout); all verification above used owner-supplied captures."
+      }
+    },
+    {
+      "enabled": true,
+      "providerName": "KhulnaPlexProvider",
+      "displayName": "KhulnaPlex",
+      "siteName": "Khulna Plex",
+      "baseUrl": "http://khulnaplex.net",
+      "language": "bn",
+      "tvTypes": ["Movie", "TvSeries"],
+      "description": "Khulna Plex — Bangla, Hindi, English and dubbed movies plus series.",
+      "iconUrl": "https://raw.githubusercontent.com/CommercialBible/MyCloudStreamExtensions/builds/icons/KhulnaPlexProvider.png",
+      "status": 1,
+      "verification": {
+        "verified": "partial",
+        "verifiedOn": "2026-11-14",
+        "listings": "VERIFIED against first-party HTML captured from an authorised network. Hero carousel parses to real watch URLs (119 cards on the home capture, 96 with a year); series grid parses 20 cards with title + poster.",
+        "detailUrl": "CONFIRMED by the site owner: http://khulnaplex.net/watch.php?id=<numeric>&type=<movie|series>. Hero cards already emit exactly this form.",
+        "details": "PARTIAL. watch.php is confirmed as the detail endpoint, but no watch-page capture was supplied, so title/poster/plot selectors are unverified.",
+        "knownLimitation": "Grid cards (div.movie-card) carry NO anchor/href in the rendered markup — the live site navigates through a JS handler whose content id lives in <script> blocks that MHTML saving strips. Grid cards therefore expose title/poster/year but no id. They resolve on open via the site's own search (see gridCardUrl/resolveTitle). No id is ever invented.",
+        "playback": "UNVERIFIED. loadLinks() reads the watch page's own <video>/<source>, download.php?file= media paths and non-cid: iframes via CloudStream's extractor registry. Nothing is bypassed.",
+        "environment": "khulnaplex.net is not reachable from the build environment (Cloudflare 403); all verification above used owner-supplied captures."
+      }
+    }
+  ]
+}

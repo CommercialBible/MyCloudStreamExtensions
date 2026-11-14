@@ -1,0 +1,14 @@
+{
+  "CTGMoviesProvider": {
+    "version": 2,
+    "sourceHash": "cd229df12670da3e8fc81fb9dd2b72234b296a75e960ca03323a80e11734b45a"
+  },
+  "KhulnaPlexProvider": {
+    "version": 2,
+    "sourceHash": "e6d7232fe8509f4e3e867bfaae9380c20bdd55d4f18907514e76316f0660c1d3"
+  },
+  "ServerOneProvider": {
+    "version": 1,
+    "sourceHash": "55c4f861ed0c9af29bd08aef8588f0fa9efbf230906f86ca7ab2810fb44dc7f5"
+  }
+}

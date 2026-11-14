@@ -32,16 +32,13 @@ every plugin.
 | Plugin | Site | Language | Types | Verification |
 | --- | --- | --- | --- | --- |
 | `ServerOneProvider` | `http://103.203.93.2/` | hi | Movie, TvSeries | **Live-verified** |
-| `CTGMoviesProvider` | `https://ctgmovies.com/` | en | Movie, TvSeries, Anime | Listings verified; playback gated |
-| `KhulnaPlexProvider` | `http://khulnaplex.net/` | bn | Movie, TvSeries | Listings verified; grid URLs inferred |
 
 Each provider is independent: its own package, its own source directory, its own build.
 One provider failing to compile never blocks or removes another.
 
 ### Honest verification status
 
-These are stated plainly because they differ per site. "Verified" means checked against
-real markup; it does not mean every page type was seen.
+"Verified" means checked against real markup; it does not mean every page type was seen.
 
 **ServerOneProvider — fully verified against live HTML.**
 Home page, sections, pagination, category filters, search, detail pages and playback were
@@ -49,28 +46,11 @@ all exercised. Search uses `GET /movies?search=` because the site's own `/search
 AJAX endpoint returns HTTP 500. A resolved playback URL returned `HTTP 206
 video/x-matroska`.
 
-**CTGMoviesProvider — listings verified, playback not.**
-Card parsing was measured against four first-party captures: home 112 cards, `/movies` 32,
-`/tv` 32, `/anime` 32 — all with title and poster, and 108/30/29/30 carrying a release
-year. Detail URLs are confirmed to be `https://ctgmovies.com/movies/<slug>`, the same
-hrefs the listing cards expose, so `load()` always receives a real detail URL.
+### Removed providers
 
-Not verified: the detail-page layout (no capture was supplied; selectors fall back to
-primitives already proven on the listings) and playback. **The site requires a signed-in
-account to play. That authentication gate is not bypassed** — `loadLinks()` reports only
-media the page exposes to an already-authorised client and returns `false` otherwise.
-
-**KhulnaPlexProvider — listings verified, detail/playback not.**
-Hero carousel parses to real watch URLs (119 cards on the home capture, 96 with a year);
-the series grid parses 20 cards. The detail endpoint is confirmed to be
-`http://khulnaplex.net/watch.php?id=<numeric>&type=<movie|series>`.
-
-Known limitation: grid cards (`div.movie-card`) carry **no `href`** in the rendered markup.
-The live site navigates through a JS click handler whose content id lives inside `<script>`
-blocks that MHTML saving strips out. Those cards therefore expose title/poster/year but no
-id, and resolve on open through the site's own search. No id is ever invented. If you open
-such a card and the search cannot resolve a watch page, the provider says so in the plot
-field instead of fabricating a stream.
+`CTGMoviesProvider` and `KhulnaPlexProvider` were removed at the owner's request. Anyone
+who already installed them keeps the plugin until they uninstall it — CloudStream does not
+delete installed plugins when they disappear from a repository.
 
 ---
 
@@ -161,7 +141,7 @@ plugins are untouched and keep their versions.
 python3 tools/build.py list            # what would be built
 python3 tools/build.py build \
   --repo-url https://github.com/CommercialBible/MyCloudStreamExtensions
-python3 tools/build.py build --only KhulnaPlexProvider   # build one provider
+python3 tools/build.py build --only ServerOneProvider     # build one provider
 python3 tools/build.py verify          # check hashes, sizes and manifests
 ```
 
@@ -196,8 +176,8 @@ all behave correctly.
   the automatic `GITHUB_TOKEN` with `contents: write` — no custom secrets are required.
 - No DRM, authentication gate, paywall or anti-bot protection is bypassed by any provider.
   Providers only read markup and media that the site itself serves publicly.
-- Where a site requires an account to play (CTGMovies), the provider does not log in; it
-  simply reports that nothing is available.
+- A site behind an account wall is not logged into on your behalf: the provider reports
+  that nothing is available rather than injecting credentials.
 
 ---
 

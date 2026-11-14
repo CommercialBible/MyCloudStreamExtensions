@@ -117,9 +117,9 @@ These are real bugs found while building the providers in this repo:
   `<div class="card-body" />`, which makes jsoup nest every following card *inside* the
   previous one. Selecting `div.card` then returns one giant element. Fix: select flat
   siblings (`div.single-item`) instead of walking parent/child.
-- **A repeated class is not always the same field.** `CTGMoviesProvider`'s site uses
-  `div.font-mono` for the year, the quality badge *and* the view count. Match on shape
-  ("text is exactly four digits"), not just on the class.
+- **A repeated class is not always the same field.** One site used `div.font-mono` for the
+  release year, the quality badge *and* the view count. Match on shape ("text is exactly
+  four digits"), not just on the class.
 - **The same card is rendered several times per page.** Hero, carousel and grid copies of
   one title carry *different* amounts of metadata. Deduplicate by canonical path and keep
   the *richest* copy, not the first one.
